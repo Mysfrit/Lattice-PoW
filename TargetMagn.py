@@ -7,11 +7,6 @@ targMagnDict = {
 }
 
 
-
-
-
-
-
 def getTableMagn():
     table_MN = pd.read_html("https://www.latticechallenge.org/svp-challenge/halloffame.php")
 

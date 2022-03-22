@@ -1,6 +1,8 @@
 import time
 from hashlib import sha256
 import json
+
+from sympy import E
 import PoW
 import numpy as np
 
@@ -50,27 +52,28 @@ class Blockchain:
 
     def proofBench(self, block):        
 
-        for x in range(700,800,10):
-            for i in range(100,170,10):
+        for x in range(100,500,100):
+            for i in range(100,200,10):
+                i = 100
                 try:
                     with open("D:\\results.txt","a") as f:
-                        f.write(f"{x}x{x}\n\nTime spent;n\n")
+                        f.write(f"{x}\nTime spent;n\n")
                         f.close()
 
                     for k in range (1):                        
                         Gen = PoW.Generate(
                             hash(sha256(json.dumps(block.__dict__, sort_keys=True).encode()).hexdigest()),i)
                         PoW.Proof(Gen,x)
-                except: 
+                except Exception as e: 
                     print("error occured")
+                    print(e)
+
                     continue
 
     def proof_of_work(self, block):
-
-
         Gen = PoW.Generate(
-            hash(sha256(json.dumps(block.__dict__, sort_keys=True).encode()).hexdigest()))
-        return PoW.Proof(Gen)
+            hash(sha256(json.dumps(block.__dict__, sort_keys=True).encode()).hexdigest()),130)
+        return PoW.Proof(Gen, 490)
 
     def mine(self):
         if not self.unconfirmed_transactions:
@@ -121,8 +124,12 @@ def main():
     print("Mining block...")
     blockchain.mine()
     print("Verifying last block...")
-    blockchain.verifyLastBlock()
+    #blockchain.verifyLastBlock()
     
+    #with open("D:\\agemigo.txt","w") as f:
+    #    f.write(str(blockchain.last_block.vector))
+
+
     print("DONE, terminating")
 
 
